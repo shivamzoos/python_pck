@@ -1,0 +1,59 @@
+@echo off
+REM SysTrack Offline Installation Script
+REM Python 3.11.0 - Windows
+
+echo =====================================
+echo SysTrack Offline Dependencies Install
+echo =====================================
+echo.
+
+REM Check if we're in the correct directory
+if not exist "requirements.txt" (
+    echo ERROR: requirements.txt not found
+    echo Please run this script from the offline_packages folder
+    pause
+    exit /b 1
+)
+
+echo Checking Python 3.11...
+py -3.11 --version
+if errorlevel 1 (
+    echo ERROR: Python 3.11 not found
+    echo Please install Python 3.11.0
+    pause
+    exit /b 1
+)
+
+echo.
+echo Installing packages from local cache...
+echo This will take 1-2 minutes...
+echo.
+
+py -3.11 -m pip install --no-index --find-links=. -r requirements.txt
+
+if errorlevel 1 (
+    echo.
+    echo =====================================
+    echo ERROR: Installation failed
+    echo =====================================
+    pause
+    exit /b 1
+)
+
+echo.
+echo =====================================
+echo Verifying installation...
+echo =====================================
+py -3.11 -c "import requests; print('✅ requests:', requests.__version__)"
+py -3.11 -c "import pandas; print('✅ pandas:', pandas.__version__)"
+py -3.11 -c "import openpyxl; print('✅ openpyxl:', openpyxl.__version__)"
+py -3.11 -c "import numpy; print('✅ numpy:', numpy.__version__)"
+
+echo.
+echo =====================================
+echo ✅ Installation Complete!
+echo =====================================
+echo.
+echo You can now run: py -3.11 sv_health_desktop.py
+echo.
+pause
