@@ -1,8 +1,11 @@
 @echo off
 REM ==================================================
 REM SysTrack Offline SYSTEM-WIDE Installation Script
-REM Python 3.11 – Task Scheduler Safe
+REM Python 3.11 – Windows
 REM ==================================================
+
+REM Force working directory to this BAT file location
+cd /d "%~dp0"
 
 echo =====================================
 echo SysTrack SYSTEM-WIDE Offline Install
@@ -39,7 +42,6 @@ echo.
 "C:\Program Files\Python311\python.exe" -m pip install ^
  --no-index ^
  --find-links=. ^
- --system ^
  -r requirements.txt
 
 if errorlevel 1 (
